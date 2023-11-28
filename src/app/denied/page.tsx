@@ -1,13 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import { RedirectType, redirect } from "next/navigation";
 import React, { useEffect } from "react";
 
 export default function page() {
   useEffect(() => {
-    setTimeout(() => {
-      <Link href={"/"} />;
+    setInterval(() => {
+      console.log("Denied page");
+      redirect("/profile", RedirectType.replace); //not wortking for some reason
     }, 1500);
   }, []);
 

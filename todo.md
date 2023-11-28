@@ -2,6 +2,10 @@
 
 will be trying to update this list and adding check boxes - [x] and - [ ]
 
+## Next 14
+
+- [ ] Check new nextjs 14
+
 ## Get Session Props
 
 - [x] root layout has to getServerSession() and check if it's auth or not.
@@ -24,6 +28,7 @@ will be trying to update this list and adding check boxes - [x] and - [ ]
       --- [ ] redo expenses layout, separate page to add what comes and goes and a dashboard
 - [ ] come up with something ok for pages under "Minigames"
 - [ ] come up with additional categories and/or pages
+- [ ] add QRCode creation (?)
 
 ## connect to database
 
@@ -31,8 +36,9 @@ will be trying to update this list and adding check boxes - [x] and - [ ]
 - [ ] create a structure for user
 - [ ] create a structure for notes
 - [ ] create a structure for expenses
-- [ ] implement something other than nodejs to deal with it? Prisma?
+- [ ] implement something other than nodejs to deal with it? Prisma? Drizzle
 
 ## bugs and things to adjust
 
+- [ ] Replace Next/Iamge for something else so I can add letters as profile image and style easily
 - [ ] found an issue where the popover isn't visible when the screen is smaller than 640 pixels. Possible issue within lib wrapper (data-radix-popper-content-wrapper)

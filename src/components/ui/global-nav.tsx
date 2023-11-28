@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Session } from "next-auth";
+import { User } from "next-auth";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 import clsx from "clsx";
@@ -10,18 +10,18 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
 import { Sidebar } from "primereact/sidebar";
 import NavBar from "../header/navbar";
-import { paths, type Item, USER_ROLES } from "../../lib/page-map";
+import { paths, type Item, USER_ROLES } from "../../lib/utils/pages-map";
 import { classNames } from "primereact/utils";
 
 interface Props {
   headerTitle: string;
-  session: Session | null;
+  user: User | undefined;
 }
 
-export default function GlobalNav({ headerTitle, session }: Props) {
+export default function GlobalNav({ headerTitle, user }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const close = () => setIsOpen(false);
-  const userRole: string = session?.user?.role ?? "unauthenticated";
+  const userRole: string = user?.role ?? "unauthenticated";
 
   return (
     //lg:bottom-0 lg:z-auto lg:w-64 lg:border-b-0 lg:border-r lg:border-gray-800
@@ -59,9 +59,9 @@ export default function GlobalNav({ headerTitle, session }: Props) {
             </h3>
           </Link>
         </div>
-        <NavBar session={session} />
+        <NavBar user={user} />
       </div>
-      <Sidebar
+      {/* <Sidebar
         position="left"
         visible={isOpen}
         onHide={close}
@@ -124,16 +124,39 @@ export default function GlobalNav({ headerTitle, session }: Props) {
               );
             })}
         </nav>
-      </Sidebar>
+      </Sidebar> */}
 
-      {/* <section
+      <section
         // lg:static lg:block
-        className={clsx("overflow-y-auto ", {
-          "fixed inset-x-0 bottom-0 top-14 mt-px bg-black": isOpen,
-          hidden: !isOpen,
-        })}
+        className={clsx(
+          "overflow-y-auto transition-transform duration-300 ease-in-out",
+          {
+            "fixed inset-y-0 left-0 w-56 bg-black transform translate-x-0":
+              isOpen,
+            hidden: !isOpen,
+          }
+        )}
       >
-        <nav className="space-y-6 px-2 pb-24 pt-5">
+        <div
+          className={clsx({
+            "flex h-12 items-center px-4 py-4 bg-gray-800": isOpen,
+          })}
+        >
+          <button
+            type="button"
+            // lg:hidden
+            // group absolute right-0 top-0 flex h-14 items-center gap-x-2 px-4 pb-1
+            className="group flex h-14 items-center gap-x-2 px-4 pb-1"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? (
+              <XMarkIcon className="block w-6 text-gray-400" />
+            ) : (
+              <Bars3Icon className="block w-6 text-gray-400" />
+            )}
+          </button>
+        </div>
+        <nav className="space-y-6 px-2 pb-5 pt-5">
           {paths
             .filter((section) => {
               return (
@@ -167,7 +190,7 @@ export default function GlobalNav({ headerTitle, session }: Props) {
               );
             })}
         </nav>
-      </section> */}
+      </section>
     </header>
   );
 }

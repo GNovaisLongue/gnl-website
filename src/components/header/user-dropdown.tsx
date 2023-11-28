@@ -5,10 +5,14 @@ import { signOut } from "next-auth/react";
 import { LayoutDashboard, LogOut } from "lucide-react";
 import Popover from "@/components/general/popover";
 import Image from "next/image";
-import { Session } from "next-auth";
+import { User } from "next-auth";
 
-export default function UserDropdown({ session }: { session: Session }) {
-  const { role, name, email, image } = session?.user!;
+interface Props {
+  user: User;
+}
+
+export default function UserDropdown({ user }: Props) {
+  const { role, name, email, image } = user;
   const [openPopover, setOpenPopover] = useState(false);
 
   if (!email) return null;
@@ -20,7 +24,7 @@ export default function UserDropdown({ session }: { session: Session }) {
           //  sm:w-56
           <div className="w-full rounded-md bg-white p-2 sm:w-56">
             <div className="p-2">
-              {session?.user?.name && (
+              {user?.name && (
                 <p className="truncate text-sm font-medium text-gray-900">
                   {name} - Role: {role}
                 </p>

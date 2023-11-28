@@ -1,11 +1,36 @@
-import NextAuth, { NextAuthOptions, RequestInternal } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import { GoogleProfile } from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
-import { GithubProfile } from "next-auth/providers/github";
+import NextAuth, {
+  AuthOptions,
+  RequestInternal,
+  User,
+  getServerSession,
+} from "next-auth";
+import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
+import GitHubProvider, { GithubProfile } from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions: NextAuthOptions = {
+import {
+  GetServerSidePropsContext,
+  NextApiRequest,
+  NextApiResponse,
+} from "next";
+import { unstable_noStore } from "next/cache";
+import { Adapter } from "next-auth/adapters";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
+
+async function updateDrizzleUser(email: string, role: string) {
+  await db.update(users).set({ role: role }).where(eq(users.email, email));
+}
+
+//https://github.com/nextauthjs/next-auth/discussions/6245
+export const authOptions: AuthOptions = {
+  adapter: DrizzleAdapter(db) as Adapter, //https://github.com/nextauthjs/next-auth/issues/6106
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     // GitHubProvider({
     //   clientId: process.env.GITHUB_ID as string,
@@ -52,8 +77,9 @@ export const authOptions: NextAuthOptions = {
           email: "test@hotmail.com",
           password: "1234",
           role: "user",
-          image: this.name?.charAt(0),
+          image: "/favicon.ico",
         };
+        //name.split(' ').map(name => name[0]).join('').toUpperCase(),
         if (
           credentials?.username === user.name &&
           credentials?.password === user.password
@@ -67,18 +93,38 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = user.role;
-      if (token?.email === "billedanimalz@gmail.com") token.role = "admin";
+      const dbUser = await db.query.users.findFirst({
+        where: (users, { eq }) => eq(users.email, token.email!),
+      });
+
+      if (!dbUser) {
+        throw new Error("no user with email found"); //something went wrong if stops here
+      }
+
+      if (dbUser) token.role = user?.role;
+      //my acc - temp solution until proper changes
+      if (token?.email === process.env.PERSONAL_EMAIL) {
+        token.role = "admin";
+      } else {
+        token.role = "user";
+      }
+      await updateDrizzleUser(dbUser.email!, token.role!);
+
       return token;
     },
     async session({ session, token }) {
-      //my acc :)
-      if (session?.user) session.user.role = token.role;
-      if (session?.user?.email === "billedanimalz@gmail.com")
-        session.user.role = "admin";
+      if (token) {
+        if (session?.user && token?.sub && token?.email) {
+          session.user.id = token.sub as string;
+          session.user.role = token.role;
+          session.user.name = token.name;
+          session.user.email = token.email;
+          session.user.image = token.picture;
+        }
+      }
 
-      console.log("seesion-token", token);
-      console.log("seesion-session", session);
+      console.log("session-token", token);
+      console.log("session-session", session);
       return session;
     },
   },
@@ -87,3 +133,17 @@ export const authOptions: NextAuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+
+// Use it in server contexts
+export async function auth(
+  ...args:
+    | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+  unstable_noStore();
+  const session = await getServerSession(...args, authOptions);
+  return {
+    getUser: () => session?.user && { user: session?.user },
+  };
+}

@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { auth, authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
 import Navbar from "../header/navbar";
@@ -7,11 +7,12 @@ import { PrimeReactProvider } from "primereact/api";
 import Tailwind from "primereact/passthrough/tailwind";
 
 export default async function Nav() {
-  const session = await getServerSession(authOptions);
+  const { getUser } = await auth();
+  const session = getUser();
   // return <Navbar session={session} />;
   return (
     <PrimeReactProvider value={{ unstyled: true, pt: Tailwind }}>
-      <GlobalNav headerTitle="/Work Dir" session={session} />
+      <GlobalNav headerTitle="/Work Dir" user={session?.user} />
     </PrimeReactProvider>
   );
 }

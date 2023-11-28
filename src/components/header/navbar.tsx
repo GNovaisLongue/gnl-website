@@ -5,9 +5,13 @@ import Link from "next/link";
 // import useScroll from "@/lib/hooks/use-scroll";
 import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
-import { Session } from "next-auth";
+import { User } from "next-auth";
 
-export default function NavBar({ session }: { session: Session | null }) {
+interface Props {
+  user: User | undefined;
+}
+
+export default function NavBar({ user }: Props) {
   const { SignInModal, setShowSignInModal } = useSignInModal();
   // const scrolled = useScroll(50);
 
@@ -34,8 +38,8 @@ export default function NavBar({ session }: { session: Session | null }) {
             <p>TEST PROJECT</p>
           </Link> */}
         <div>
-          {session ? (
-            <UserDropdown session={session} />
+          {user ? (
+            <UserDropdown user={user} />
           ) : (
             <button
               className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
