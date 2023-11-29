@@ -1,13 +1,14 @@
 "use client";
 
-import { RedirectType, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 export default function page() {
+  const { replace } = useRouter();
   useEffect(() => {
     setInterval(() => {
       console.log("Denied page");
-      redirect("/profile", RedirectType.replace); //not wortking for some reason
+      replace("/");
     }, 1500);
   }, []);
 

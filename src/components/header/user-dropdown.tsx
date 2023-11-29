@@ -1,19 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { User } from "next-auth";
+import Image from "next/image";
 import { LayoutDashboard, LogOut } from "lucide-react";
 import Popover from "@/components/general/popover";
-import Image from "next/image";
-import { User } from "next-auth";
+import clsx from "clsx";
 
 interface Props {
   user: User;
 }
 
 export default function UserDropdown({ user }: Props) {
+  const { push } = useRouter();
   const { role, name, email, image } = user;
   const [openPopover, setOpenPopover] = useState(false);
+  const isAdmin = user?.role == "admin" ? true : false;
 
   if (!email) return null;
 
@@ -32,8 +36,14 @@ export default function UserDropdown({ user }: Props) {
               <p className="truncate text-sm text-gray-500">{email}</p>
             </div>
             <button
-              className="relative flex w-full cursor-not-allowed items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100"
-              disabled
+              className={clsx(
+                "relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100",
+                { "cursor-not-allowed": !isAdmin }
+              )}
+              disabled={!isAdmin}
+              onClick={() => {
+                push("/dashboard");
+              }}
             >
               <LayoutDashboard className="h-4 w-4 text-black" />
               <p className="text-sm text-black">Dashboard</p>

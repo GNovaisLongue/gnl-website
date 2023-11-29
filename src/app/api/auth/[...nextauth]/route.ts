@@ -53,43 +53,6 @@ export const authOptions: AuthOptions = {
         };
       },
     }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        username: {
-          label: "Username",
-          type: "text",
-          placeholder: "your username",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "your password",
-        },
-      },
-      async authorize(
-        credentials: Record<"username" | "password", string> | undefined,
-        req: Pick<RequestInternal, "headers" | "body" | "query" | "method">
-      ) {
-        let user = {
-          id: "1234",
-          name: "Test",
-          email: "test@hotmail.com",
-          password: "1234",
-          role: "user",
-          image: "/favicon.ico",
-        };
-        //name.split(' ').map(name => name[0]).join('').toUpperCase(),
-        if (
-          credentials?.username === user.name &&
-          credentials?.password === user.password
-        ) {
-          return user;
-        } else {
-          return null;
-        }
-      },
-    }),
   ],
   callbacks: {
     async jwt({ token, user }) {
