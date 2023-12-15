@@ -7,11 +7,8 @@ import { useSelectedLayoutSegment } from "next/navigation";
 
 import clsx from "clsx";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-
-import { Sidebar } from "primereact/sidebar";
 import NavBar from "../header/navbar";
 import { paths, type Item, USER_ROLES } from "../../lib/utils/pages-map";
-import { classNames } from "primereact/utils";
 
 interface Props {
   headerTitle: string;
@@ -21,7 +18,7 @@ interface Props {
 export default function GlobalNav({ headerTitle, user }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const close = () => setIsOpen(false);
-  const userRole: string = user?.role ?? "unauthenticated";
+  const userRole: string = user?.role ?? "guest";
 
   return (
     //lg:bottom-0 lg:z-auto lg:w-64 lg:border-b-0 lg:border-r lg:border-gray-800
@@ -61,71 +58,6 @@ export default function GlobalNav({ headerTitle, user }: Props) {
         </div>
         <NavBar user={user} />
       </div>
-      {/* <Sidebar
-        position="left"
-        visible={isOpen}
-        onHide={close}
-        ptOptions={{ mergeSections: true }} //requiered to customized Prime components
-        pt={{
-          header: {
-            className: classNames("flex items-center", "p-5"),
-          },
-          // closeButton: {
-          //   className: classNames(
-          //     "flex items-center justify-center overflow-hidden relative",
-          //     "w-8 h-8 text-gray-500 border-0 bg-transparent rounded-full transition duration-200 ease-in-out mr-2 last:mr-0",
-          //     "hover:text-gray-700 hover:border-transparent hover:bg-gray-200",
-          //     "focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]", // focus
-          //     "dark:hover:text-white/80 dark:hover:text-white/80 dark:hover:border-transparent dark:hover:bg-gray-800/80 dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]"
-          //   ),
-          // },
-          // closeIcon: {
-          //   className: classNames("w-4 h-4 inline-block"),
-          // },
-          // content: {
-          //   className: classNames(
-          //     "p-5 pt-0 h-full w-full",
-          //     "grow overflow-y-auto"
-          //   ),
-          // },
-        }}
-      >
-        <nav>
-          {paths
-            .filter((section) => {
-              return (
-                USER_ROLES.indexOf(section.role) <= USER_ROLES.indexOf(userRole)
-              );
-            })
-            .map((section) => {
-              return (
-                <section key={section.name}>
-                  <div className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-gray-400/80">
-                    <div className="cursor-default">{section.name}</div>
-                  </div>
-
-                  <div className="space-y-1">
-                    {section.items
-                      .filter((section) => {
-                        return (
-                          USER_ROLES.indexOf(section.role) <=
-                          USER_ROLES.indexOf(userRole)
-                        );
-                      })
-                      .map((item) => (
-                        <GlobalNavItem
-                          key={item.slug}
-                          item={item}
-                          close={close}
-                        />
-                      ))}
-                  </div>
-                </section>
-              );
-            })}
-        </nav>
-      </Sidebar> */}
-
       <section
         // lg:static lg:block
         className={clsx(

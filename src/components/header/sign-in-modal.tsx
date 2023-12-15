@@ -1,4 +1,4 @@
-import Modal from "@/components/general/modal";
+import Modal from "@/components/ui/modal";
 import { signIn } from "next-auth/react";
 import {
   useState,

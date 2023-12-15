@@ -6,7 +6,7 @@ import { signOut } from "next-auth/react";
 import { User } from "next-auth";
 import Image from "next/image";
 import { LayoutDashboard, LogOut } from "lucide-react";
-import Popover from "@/components/general/popover";
+import Popover from "@/components/ui/popover";
 import clsx from "clsx";
 
 interface Props {

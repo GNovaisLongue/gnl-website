@@ -13,12 +13,14 @@ import { AdapterAccount } from "next-auth/adapters";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
-  name: text("name"),
+  name: text("name").notNull(),
   email: text("email").notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
-  image: text("image"),
-  role: text("role"), //.$type<"admin" | "user">(),
+  emailVerified: timestamp("emailVerified", { mode: "date" }).notNull(),
+  image: text("image").notNull(),
+  role: text("role").notNull(), //.$type<"admin" | "user">()
 });
+
+export type User = typeof users.$inferSelect;
 
 export const notes = pgTable("notes", {
   id: integer("id").notNull().primaryKey(),
@@ -30,6 +32,8 @@ export const notes = pgTable("notes", {
   createdAt: timestamp("created_at"),
   updatedAt: timestamp("updated_at"),
 });
+
+export type Note = typeof notes.$inferSelect;
 
 export const accounts = pgTable(
   "account",
@@ -72,7 +76,5 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   })
 );
-
-// something related to notes
 
 // something related to expenses

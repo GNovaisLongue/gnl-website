@@ -1,16 +1,17 @@
-export const USER_ROLES = ["unauthenticated", "authenticated", "user", "admin"];
+export const USER_ROLES = ["guest", "user", "admin"];
+type roles = "guest" | "user" | "admin";
 
 export type Item = {
   name: string;
   slug: string;
   description?: string;
-  role: "unauthenticated" | "authenticated" | "user" | "admin";
+  role: roles;
 };
 
 export const paths: {
   name: string;
   items: Item[];
-  role: "unauthenticated" | "authenticated" | "user" | "admin";
+  role: roles;
 }[] = [
   {
     name: "Account",
@@ -31,16 +32,16 @@ export const paths: {
         name: "Account Settings",
         slug: "account-settings",
         description: "Manage your info, privacy and security.",
-        role: "unauthenticated",
+        role: "guest",
       },
       {
         name: "My Notes",
         slug: "notes",
         description: "Render multiple pages in the same layout[boilerplate]",
-        role: "authenticated",
+        role: "user",
       },
     ],
-    role: "unauthenticated",
+    role: "guest",
   },
   {
     name: "Expenses",
@@ -50,22 +51,22 @@ export const paths: {
         slug: "expense",
         description:
           "Create meaningful Loading UI for specific parts of an app",
-        role: "authenticated",
+        role: "user",
       },
       {
         name: "Dashboard",
         slug: "expense-dashboard",
         description: "Create Error UI for specific parts of an app",
-        role: "authenticated",
+        role: "user",
       },
       {
         name: "Listed Expenses",
         slug: "expense-list",
         description: "Create Not Found UI for specific parts of an app",
-        role: "authenticated",
+        role: "user",
       },
     ],
-    role: "authenticated",
+    role: "user",
   },
   {
     name: "Minigames",
@@ -132,7 +133,7 @@ export const paths: {
         role: "admin",
       },
     ],
-    role: "unauthenticated",
+    role: "guest",
   },
   {
     name: "[Open Title #2]",
@@ -141,13 +142,13 @@ export const paths: {
         name: "Page#1",
         slug: "hooks",
         description: "TEST Description",
-        role: "authenticated",
+        role: "user",
       },
       {
         name: "Page#2",
         slug: "styling",
         description: "TEST Description",
-        role: "unauthenticated",
+        role: "guest",
       },
       {
         name: "Page#3",
@@ -162,6 +163,6 @@ export const paths: {
         role: "user",
       },
     ],
-    role: "unauthenticated",
+    role: "guest",
   },
 ];

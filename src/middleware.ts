@@ -10,7 +10,7 @@ const USER_ROLES = {
 export default withAuth(
   function middleware(req: NextRequestWithAuth) {
     if (
-      req.nextUrl.pathname.startsWith("/dashboard") &&
+      // req.nextUrl.pathname.startsWith("/dashboard") &&
       req.nextauth.token?.role !== "admin"
     ) {
       return NextResponse.rewrite(new URL("/denied", req.url));

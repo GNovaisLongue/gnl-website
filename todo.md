@@ -16,13 +16,37 @@ will be trying to update this list and adding check boxes - [x] and - [ ]
 - [ ] limit getServerSession so it doesn't trigger on every new render.
 - [ ] role verification and redirect in case of bypassed access.
 
+## Account > Dashboard
+
+- [ ] need more inspiration
+- [ ] Allow owner to visualize and edit users'roles
+
+## Account > Profile
+
+- [ ] for now, simple list containing the user's saved notes
+      --- [ ] getUserId() and getUserNotes()
+      --- [ ] map over UserNotes
+- [ ] button to add more notes?
+- [ ] button to delete notes?
+
+## Account > Acc. Settings
+
+- [ ] need more inspiration
+
+## Account > My Notes
+
+- [ ] for now, blank page where user can create their notes
+      --- [ ] getUserId() and saveUserNote()
+      --- [ ] once saved, clear page.
+- [ ] button to save note?
+
 ## "Decent" design for pages within each section
 
 - [ ] come up with something ok for main root page
 - [ ] come up with something ok for pages under "Account"
       --- [ ] simple design for management dashboard
-      --- [ ] simple design for acc settings (nexusmods)
-      --- [ ] simple design for profile
+      --- [ ] simple design for acc settings
+      --- [ ] simple design for profile (nexusmods-like)
       --- [ ] simple design for editable/shareable notes (maybe move to another category)
 - [ ] come up with something ok for pages under "Expenses"
       --- [ ] redo expenses layout, separate page to add what comes and goes and a dashboard
@@ -32,13 +56,19 @@ will be trying to update this list and adding check boxes - [x] and - [ ]
 
 ## connect to database
 
-- [ ] connect to mongo.db
-- [ ] create a structure for user
+- [x] connect to mongo.db (Connected to PostGreSQL instead)
+- [x] create a structure for user
 - [ ] create a structure for notes
 - [ ] create a structure for expenses
-- [ ] implement something other than nodejs to deal with it? Prisma? Drizzle
+- [x] implement something other than nodejs to deal with it? Prisma? (Drizzle)
 
 ## bugs and things to adjust
 
-- [ ] Replace Next/Iamge for something else so I can add letters as profile image and style easily
-- [ ] found an issue where the popover isn't visible when the screen is smaller than 640 pixels. Possible issue within lib wrapper (data-radix-popper-content-wrapper)
+- [] Turn pages into subsets? easier to grant/revoke permissions for users.
+
+- [x] "primereact/datatable" is kinda 🤡. Either change to something else or leave as is for now. (not showing icons or colors)
+      --- [x] removed primereact
+- [ ] Replace Next/Image for something else so I can add letters as profile image and style easily.
+- [ ] Found an issue where the popover isn't visible when the screen is smaller than 640 pixels. Possible issue within lib wrapper (data-radix-popper-content-wrapper).
+- [ ] /notes, when loaded, breaks the header styling.
+- [x] popover "Dashboard" button wasn't working as intended, as in, being accessible for admins and redirecting.

@@ -6,8 +6,7 @@ import React, { useEffect } from "react";
 export default function page() {
   const { replace } = useRouter();
   useEffect(() => {
-    setInterval(() => {
-      console.log("Denied page");
+    setTimeout(() => {
       replace("/");
     }, 1500);
   }, []);
