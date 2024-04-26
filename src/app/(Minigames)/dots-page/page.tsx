@@ -8,7 +8,7 @@ interface Point {
   y: number;
 }
 
-const ScreenDots = () => {
+export default function ScreenDots() {
   const [points, setPoints] = React.useState<Point[]>([]);
   const [RedoPoints, setRedoPoints] = React.useState<Point[]>([]);
   console.log(points.length);
@@ -97,6 +97,4 @@ const ScreenDots = () => {
       </div>
     </div>
   );
-};
-
-export default ScreenDots;
+}

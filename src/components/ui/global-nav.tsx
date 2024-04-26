@@ -24,40 +24,40 @@ export default function GlobalNav({ headerTitle, user }: Props) {
     //lg:bottom-0 lg:z-auto lg:w-64 lg:border-b-0 lg:border-r lg:border-gray-800
     <header className="fixed top-0 z-10 flex w-full flex-col border-b border-gray-800 bg-black ">
       {/* lg:h-auto */}
-      <div className="flex h-12 items-center px-4 py-4 bg-gray-800">
-        <div className="flex w-full items-center max-w-screen-xl mr-5">
-          <button
-            type="button"
-            // lg:hidden
-            // group absolute right-0 top-0 flex h-14 items-center gap-x-2 px-4 pb-1
-            className="group flex h-14 items-center gap-x-2 px-4 pb-1"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? (
-              <XMarkIcon className="block w-6 text-gray-400" />
-            ) : (
-              <Bars3Icon className="block w-6 text-gray-400" />
-            )}
-          </button>
-          <Link
-            href="/"
-            // className="group flex w-full items-center gap-x-2.5"
-            className="group flex items-center"
-            onClick={close}
-          >
-            <section className="h-7 w-7 rounded-full border border-white/30 group-hover:border-white/50 flex items-center justify-center">
-              <div className="h-4 w-4 rounded-full bg-gray-300 flex items-center justify-center">
-                <div className="h-2 w-2 rounded-full bg-purple-500"></div>
-                <div className="h-2 w-2 rounded-full bg-blue-500"></div>
-              </div>
-            </section>
-            <h3 className="font-semibold tracking-wide text-gray-400 group-hover:text-gray-50">
-              {headerTitle}
-            </h3>
-          </Link>
-        </div>
+      <section className="flex h-12 items-center px-4 py-4 bg-gray-800 justify-between">
+        {/* Bar Icon Button*/}
+        <button
+          type="button"
+          // lg:hidden
+          // group absolute right-0 top-0 flex h-14 items-center gap-x-2 px-4 pb-1
+          className="group flex h-14 items-center gap-x-2 px-4 pb-1"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? (
+            <XMarkIcon className="block w-6 text-gray-400" />
+          ) : (
+            <Bars3Icon className="block w-6 text-gray-400" />
+          )}
+        </button>
+        {/* Circle Icon + Header Title */}
+        <Link
+          href="/"
+          // className="group flex w-full items-center gap-x-2.5"
+          className="group flex items-center"
+          onClick={close}
+        >
+          <section className="h-7 w-7 rounded-full border border-white/30 group-hover:border-white/50 flex items-center justify-center">
+            <div className="h-4 w-4 rounded-full bg-gray-300 flex items-center justify-center">
+              <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+              <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+            </div>
+          </section>
+          <h3 className="font-semibold tracking-wide text-gray-400 group-hover:text-gray-50">
+            {headerTitle}
+          </h3>
+        </Link>
         <NavBar user={user} />
-      </div>
+      </section>
       <section
         // lg:static lg:block
         className={clsx(

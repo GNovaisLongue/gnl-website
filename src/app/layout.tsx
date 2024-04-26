@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 import { Suspense } from "react";
 import Nav from "@/components/ui/nav";
+import Footer from "@/components/footer/footer";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -24,23 +25,17 @@ export default async function RootLayout({
   return (
     <html lang="en" className="[color-scheme:dark]">
       <body className="bg-gray-1100 overflow-y-scroll pb-20">
-        <NextTopLoader />
-        <Suspense fallback="...loading">
+        <NextTopLoader showSpinner={false} />
+        <Suspense fallback={<h2>Loading...</h2>}>
           <Nav />
         </Suspense>
-        {/* className="lg:pl-64" */}
-        <div>
-          {/* lg:px-4 lg:pt-6 lg:pb-4 */}
-          <div className="mx-auto max-w-6xl space-y-4 px-2 pt-16">
-            <div className="bg-vc-border-gradient rounded-lg p-px shadow-lg shadow-black/20">
-              {/* lg:p-4 */}
-              <div className="rounded-lg bg-black p-3.5">{children}</div>
-            </div>
-            <footer>
-              <b>Will be a Footer Soon</b>
-            </footer>
-          </div>
-        </div>
+        <main className="mx-auto max-w-6xl space-y-4 px-2 pt-16">
+          <article className="bg-vc-border-gradient rounded-lg p-px shadow-lg shadow-black/20">
+            {/* lg:p-4 */}
+            <section className="rounded-lg bg-black p-3.5">{children}</section>
+          </article>
+          <Footer />
+        </main>
         <Analytics />
       </body>
     </html>

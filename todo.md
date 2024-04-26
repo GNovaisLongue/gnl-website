@@ -2,9 +2,29 @@
 
 will be trying to update this list and adding check boxes - [x] and - [ ]
 
+## Content
+
+- NextJs 14
+- Tailwind CSS
+- clsx
+- Middlewares
+- Drizzle
+- zod
+- Axios
+- BCrypt JS
+- JWT token
+- SQL? (Postgres?)
+- NoSQL? (MongoDB?)
+- Edgestore for file upload
+
 ## Next 14
 
 - [ ] Check new nextjs 14
+
+## Middleware
+
+- [ ] "Denied Access" not working
+- [ ] Rewrite access verification
 
 ## Get Session Props
 

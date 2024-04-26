@@ -45,11 +45,11 @@ export const authOptions: AuthOptions = {
       profile(profile: GoogleProfile) {
         return {
           ...profile,
-          role: profile.role ?? "user",
+          role: profile?.role ?? "user",
           id: profile.sub,
           name: profile.name,
           email: profile.email,
-          image: profile.picture ?? "/favicon.ico",
+          image: profile?.picture ?? "/favicon.ico",
         };
       },
     }),

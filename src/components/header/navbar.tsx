@@ -37,18 +37,16 @@ export default function NavBar({ user }: Props) {
             ></Image>
             <p>TEST PROJECT</p>
           </Link> */}
-        <div>
-          {user ? (
-            <UserDropdown user={user} />
-          ) : (
-            <button
-              className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
-              onClick={() => setShowSignInModal(true)}
-            >
-              Sign In
-            </button>
-          )}
-        </div>
+        {user ? (
+          <UserDropdown user={user} />
+        ) : (
+          <button
+            className="rounded-full border border-black bg-black px-4 py-2 text-sm text-white transition-all hover:bg-white hover:text-black"
+            onClick={() => setShowSignInModal(true)}
+          >
+            Log In
+          </button>
+        )}
       </div>
       {/* </div> */}
     </>

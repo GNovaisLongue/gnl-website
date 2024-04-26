@@ -3,7 +3,7 @@
 import React from "react";
 import "./style.css";
 
-const Counters = () => {
+export default function Counters() {
   const [count, setCount] = React.useState<number>(0);
   const countRef = React.useRef(0);
 
@@ -20,6 +20,4 @@ const Counters = () => {
       </div>
     </div>
   );
-};
-
-export default Counters;
+}

@@ -13,11 +13,11 @@ import { AdapterAccount } from "next-auth/adapters";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
-  name: text("name").notNull(),
+  name: text("name"),
   email: text("email").notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }).notNull(),
-  image: text("image").notNull(),
-  role: text("role").notNull(), //.$type<"admin" | "user">()
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  image: text("image"),
+  role: text("role"), //.$type<"admin" | "user">()
 });
 
 export type User = typeof users.$inferSelect;
@@ -53,7 +53,7 @@ export const accounts = pgTable(
     session_state: text("session_state"),
   },
   (account) => ({
-    compoundKey: primaryKey(account.provider, account.providerAccountId),
+    primaryKey: [account.provider, account.providerAccountId],
   })
 );
 
@@ -73,7 +73,7 @@ export const verificationTokens = pgTable(
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (vt) => ({
-    compoundKey: primaryKey(vt.identifier, vt.token),
+    primaryKey: [vt.identifier, vt.token],
   })
 );
 
